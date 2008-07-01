@@ -3,10 +3,10 @@ require File.dirname(__FILE__) + '/test_helper'
 class SomeController; end
 module SomeHelper; end
 
-class RailsPDF::PDFRenderTest < Test::Unit::TestCase
+class PrawnView::PrawnViewTest < Test::Unit::TestCase
   def test_should_not_be_compilable
     view = stub(:controller => SomeController.new)
-    pdf = RailsPDF::PDFRender.new(view)
-    assert !pdf.compilable?
+    prawn_view = PrawnView::PrawnView.new(view)
+    assert !prawn_view.compilable?
   end
 end

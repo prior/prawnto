@@ -5,5 +5,5 @@ require 'test/unit'
 module ApplicationHelper; end
 
 $LOAD_PATH << File.dirname(__FILE__) + '/../lib'
-require 'railspdf'
+require 'prawn'
 require 'mocha'

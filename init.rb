@@ -1,3 +1,3 @@
-require 'railspdf'
+require 'prawn'
 
-ActionView::Template.register_template_handler 'rpdf', RailsPDF::PDFRender
+ActionView::Template.register_template_handler 'prawn', PrawnView::PrawnView
