@@ -1,10 +1,35 @@
-railspdf
+prawn_view
 
-Adds pdf-writer support to Rails
+credits/acknowledgments:
+this was completely ripped off from pelagir's railspdf plugin: 
+which is completely ripped off of the original railspdf plugin:
+which is completely ripped off of the rails wiki regarding pdfs:
+
+instructions:
+ 1) link in prawn lib:
+      - if gem by now, then:
+          gem install prawn
+      - if not gem yet or you want latest, then:
+          git submodule add git://github.com:sandal/prawn.git vendor/gems/prawn-0.0.0.1/
+
+ 2) set up gem dependency:
+      - in environment.rb add this line at appropriate place:
+          config.gem "prawn"
+      (ideally the plugin should register this dependency on its own, 
+       but i couldn't figure out how-- anyone know please tell me)
+
+ 3) make a view with .prawn extention
+ 4) inside view just use prawn functions
+
+options:
+  if you want to set up any of the options available to Prawn::Document
+  then simply add this line before anything else:
+    options = :page_size=>:landscape, etc., etc.
+  
+  made this change from railspdf to keep formatting decisions inside the view
 
 
-Usage
------
+possibly relevant bits from old railspdf:
 
 To begin rendering PDFs, simply create a view with a .rpdf extension and paste in the code:
 
