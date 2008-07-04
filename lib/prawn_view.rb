@@ -1,66 +1,84 @@
 require 'prawn'
 
+
 module PrawnView
 
-  class PrawnView < ActionView::Base
-    include ApplicationHelper
+  class Prawn < ActionView::TemplateHandler
+    include ActionView::TemplateHandlers::Compilable
 
-    def initialize(action_view)
-      @action_view = action_view
-
-      path = @action_view.base_path
-      basename = @action_view.first_render
-      extension = @action_view.finder.pick_template_extension(basename)
-
-      @template_file = "#{path}/#{basename}.#{extension}"
-      #@template_file = "#{@action_view.base_path}/#{@action_view.first_render}.#{@action_view.finder.pick_template_extension(@action_view.first_render)}" 
-
-      # include controller's helper
-      prefix = action_view.controller.class.to_s.gsub(/Controller/, '')
-      self.class.send(:include, "#{prefix}Helper".constantize)
-    end
-    
-    # returns array of options, source without option declaration, adjusted starting line number
-    def extract_document_options(source)
-      def set_document_options(options={}); options; end
-
-      match = /^\s*set_document_options\s*[\s(](.*,\s*\n*)*.*[^,]\s*\n/.match(source)
-      if match
-        options = eval(match[0],nil,@template_file)
-        [eval(match[0],nil,@template_file), match.post_match, match[0].count("\n")]
-      else
-        [{}, source, 1]
-      end 
+    def self.template_setup_source
+      puts "getting setup source"
+      @@template_setup_source ||= 
+        begin
+          source_regex = Regexp.new('\s*def\stemplate_setup_source_container\s*\n(.*\n)\s*end\s*\#\#\#\s*template_setup_source_container',Regexp::MULTILINE)
+          source_regex.match(File.read(__FILE__))[1]
+        end
     end
 
-    def render(template, local_assigns = {})
-      controller = @action_view.controller
-      headers = controller.headers
+    def self.line_offset
+      return 0
+      puts 'getting line offset'
+      @@line_offset ||= self.template_setup_source.count("\n") + 2
+      puts @@line_offset
+      @@line_offset
+    end
+
+    def compile(template)
+      setup_source = Prawn::template_setup_source
+
+      puts ">>>>>>>>>>>>>>>>>:"
+      puts setup_source
+      puts "<<<<<<<<<<<<<<<<<<"
+      puts template.source
+      puts ">>>>>>>>>>>>>>>>>>"
+
+      # what does this do exactly?  not sure but copied it from builder implementation
+      setup_source.gsub!("controller.","controller.response.") if @view.send!(:controller).respond_to?(:response)
       
+      #setup_source + 
+      x = 
+      "controller.response.content_type ||= Mime::PDF\n" +
+      "@prawn_document_options={}\n" +
+      "pdf = Prawn::Document.new(@prawn_document_options)\n" + 
+      template.source +
+      "\npdf.render\n"
+puts ">>>"
+puts x
+puts ">>>"
+      x
+    end
+
+    ### this is a dummy method to let me see code with editor's goodness.
+    ###   this method is never called, but instead the code is stripped out and pasted
+    ###   as code to be run by the caller of compile method
+    def template_setup_source_container
+      #TODO: blow out into proper Error class
+      # this is to prevent users from wanting to kill me
+      #   since these would overwrite any local variables by the same name created by the user of this plugin
+      
+      #TODO: test when local_assigns actually has something-- partial render?
+      conflicted_variables = (local_variables-['local_assigns']).select{|v| !((eval v).nil?)}
+      throw "reserved local variable: #{conflicted_variables.inspect}" if !conflicted_variables.empty?
+
+      @prawn_document_options ||= {}
+
+      #TODO: check if this really makes sense-- kept around from railspdf, but maybe not needed?
       pragma = 'no-cache'
       cache_control = 'no-cache, must-revalidate'
       pragma = cache_control = '' if controller.request.env['HTTP_USER_AGENT'] =~ /msie/i #keep ie happy (from railspdf-- no personal knowledge of these issues)
       
+      headers = controller.headers
       headers['Pragma'] ||= pragma
       headers['Cache-Control'] ||= cache_control
-      headers["Content-Type"] ||= 'application/pdf'
-      headers["Content-Disposition"] ||= "attachment; filename=#{@filename}" if @filename #specify @filename in controller otherwise will be inline -- is this true?
       
-      options, source, line_number = extract_document_options(template.source)
+      controller.content_type ||= Mime::PDF
 
-      document = Prawn::Document::new(options)
-      #get the instance variables setup	    	
-      controller.instance_variables.each do |v|
-        document.instance_variable_set(v, controller.instance_variable_get(v))
-      end
-      
-      document.instance_eval(source, @template_file, line_number)
-      document.render
-    end
+      filename = @prawn_document_options[:filename]
+      headers["Content-Disposition"] ||= "attachment; filename=#{filename}" if filename
+      #specify filename in controller otherwise will be inline
+      #TODO: verify attachment/inline behavior?  come up with solution for default naming (probably should just use railspdf way)
 
-    def compilable?
-      false
-    end
+    end  ### template_setup_source_container  <--- keep comment there so i can use it to snip out this code easier
     
   end
 end
