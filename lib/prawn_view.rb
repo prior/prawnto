@@ -16,6 +16,7 @@ module PrawnView
     end
 
     def self.line_offset
+      TODO: fix this!
       return 0
       puts 'getting line offset'
       @@line_offset ||= self.template_setup_source.count("\n") + 2
@@ -37,8 +38,9 @@ module PrawnView
       
       #setup_source + 
       x = 
-      "controller.response.content_type ||= Mime::PDF\n" +
-      "@prawn_document_options={}\n" +
+        setup_source + "\n" +
+      #"controller.response.content_type ||= Mime::PDF\n" +
+      #"@prawn_document_options={}\n" +
       "pdf = Prawn::Document.new(@prawn_document_options)\n" + 
       template.source +
       "\npdf.render\n"
@@ -56,7 +58,7 @@ puts ">>>"
       # this is to prevent users from wanting to kill me
       #   since these would overwrite any local variables by the same name created by the user of this plugin
       
-      #TODO: test when local_assigns actually has something-- partial render?
+      #TODO: test when local_assigns actually has something-- partial render? -- and make sure this is actually a problem?
       conflicted_variables = (local_variables-['local_assigns']).select{|v| !((eval v).nil?)}
       throw "reserved local variable: #{conflicted_variables.inspect}" if !conflicted_variables.empty?
 
@@ -65,9 +67,7 @@ puts ">>>"
       #TODO: check if this really makes sense-- kept around from railspdf, but maybe not needed?
       pragma = 'no-cache'
       cache_control = 'no-cache, must-revalidate'
-      pragma = cache_control = '' if controller.request.env['HTTP_USER_AGENT'] =~ /msie/i #keep ie happy (from railspdf-- no personal knowledge of these issues)
-      
-      headers = controller.headers
+      pragma = cache_control = '' if request.env['HTTP_USER_AGENT'] =~ /msie/i #keep ie happy (from railspdf-- no personal knowledge of these issues)
       headers['Pragma'] ||= pragma
       headers['Cache-Control'] ||= cache_control
       
