@@ -1,6 +1,5 @@
 prawn_view
 -------------------------------------------------
-
 -------------------------------------------------
 a rails (2.1) plugin, providing templating abilities
 for generating pdf files leveraging the new kick-ass prawn library
@@ -10,7 +9,7 @@ for generating pdf files leveraging the new kick-ass prawn library
 
 credits/acknowledgments:
 -------------------------------------------------
-prawn_view was created by thorny_sun from cracklabs.com
+prawn_view was created by thorny_sun at cracklabs.com
 git://github.com/thorny-sun/prawn_view.git
 standing on the shoulders of giants:
 
@@ -82,8 +81,12 @@ instructions: (for rails >=2.1)
 
 example files:
 -------------------------------------------------
-TODO: fill in here
-
+you will find an app subtree under the examples directory.
+simply create a new rails app and copy this over the app directory.
+then copy config/routes.rb over the existing config/routes.rb
+make sure you've got the haml gem installed, as well as this plugin.
+Then follow steps 1+2 in the instructions above.
+(maybe I should publish the resulting rails app to simplify this?)
 
 
 important? info from railspdf README:
