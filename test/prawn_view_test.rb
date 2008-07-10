@@ -1,16 +1,18 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'test/unit'
+require File.expand_path(File.join(File.dirname(__FILE__), '../../../../config/environment'))
 
-class SomeController; end
-module SomeHelper; end
 
-class PrawnView::PrawnViewTest < Test::Unit::TestCase
-  def test_should_not_be_compilable
-    view = stub(:controller => SomeController.new)
-    prawn_view = PrawnView::PrawnView.new(view)
-    assert !prawn_view.compilable?
+class PrawnViewTest < Test::Unit::TestCase
+  def test_template_setup_source
+    # maybe test that you can eval source without errors (after mocha-ing up some objects?
   end
-  #TODO: add checks to make sure line_number reporting is good for errors-- even when document options are included (in document_options = and in rest of view)
-  #TODO: add checks to make sure options setting is working properly
-  #TODO: add checks to make sure controller variables are available as well as helper functions as well as local variables
+
+  def test_template_line_offset
+    assert PrawnView::Prawn.line_offset > 1
+  end
+
+  # TODO: perhaps also test that @prawn_document_options affects Prawn::Document's initial settings-- though seems like might be kinda pointless/redundant
+
   #TODO: partial possibilities?
 end
+

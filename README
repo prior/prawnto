@@ -1,85 +1,92 @@
 prawn_view
+-------------------------------------------------
+
+-------------------------------------------------
+a rails (2.1) plugin, providing templating abilities
+for generating pdf files leveraging the new kick-ass prawn library
+-------------------------------------------------
+
+
 
 credits/acknowledgments:
-this was completely ripped off from pelagir's railspdf plugin: 
-which is completely ripped off of the original railspdf plugin:
-which is completely ripped off of the rails wiki regarding pdfs:
+-------------------------------------------------
+prawn_view was created by thorny_sun from cracklabs.com
+git://github.com/thorny-sun/prawn_view.git
+standing on the shoulders of giants:
 
-instructions:
+as a starting point I used the updated railspdf plugin:
+git://github.com/pelargir/railspdf.git
+more specifically:
+http://github.com/pelargir/railspdf/commit/70c172d21c0021de670eda564aea6902c60ef683
+written by:
+pelargir (Mathew Bass)
+
+pelargir's was a 2.1 update to the original railspdf plugin at: 
+http://rubyforge.org/projects/railspdfplugin/
+written by:
+Tom Willett & Josh Charles
+
+which was based on the info on the rails wiki regarding pdfs:
+http://wiki.rubyonrails.org/rails/pages/HowtoGeneratePDFs
+which I believe was written by the original author of the 
+pdf-writer gem:
+Austin Ziegler
+
+i've also used the xml builder template code to deduce
+how to use the latest rails 2.1 goodness.
+so thanks to those authors for the example as well as the framework:
+lifo? NKoz? jeremy? josh?
+
+and of course a huge thanks to the man behind prawn:
+sandal (Gregory Brown)
+i am but a prawn parasite (hopefully symbiotic)
+
+
+
+instructions: (for rails >=2.1)
+-------------------------------------------------
  1) link in prawn lib:
       - if gem by now, then:
           gem install prawn
-      - if not gem yet or you want latest, then:
+      - if not gem yet or you want latest, then: 
+          (assumes you're using git and know about submodules)
           git submodule add git://github.com:sandal/prawn.git vendor/gems/prawn-0.0.0.1/
 
  2) set up gem dependency:
       - in environment.rb add this line at appropriate place:
           config.gem "prawn"
       (ideally the plugin should register this dependency on its own, 
-       but i couldn't figure out how-- anyone know please tell me)
+       but i couldn't figure out how-- anyone know please tell me --
+       init.rb seems to be too late in initialization process to work)
 
- 3) make a view with .prawn extention
- 4) inside view just use prawn functions
+ 3) create your view:
+      - end your view file with .pdf.prawn extention.  
+      - the view will have access to a local 'pdf' variable that 
+          is the Prawn::Document object.
 
-options:
-  if you want to set up any of the options available to Prawn::Document
-  then simply add this line before anything else:
-    options = :page_size=>:landscape, etc., etc.
-  
-  made this change from railspdf to keep formatting decisions inside the view
+ 4) setup options:
+      - if you'd like to set any of the Prawn::Document initial setup
+          options, then you will have to set them up in the controller
+          using the @prawn_document_options hash.
+          i.e.  @prawn_document_options = {:page_layout=>:landscape}
+      (ideally this view stuff would be specified in the view-- any
+       ideas how to get it there? Trying to get prawn author to 
+       provide hooks for initial option setup from Document object,
+       which might solve this.)
+      - an additional option of :filename is afforded in the case that
+          the user would like to provide a filename for the pdf.  though 
+          this option also futzes with inline vs. download flag-- need to
+          break this out as separate flag
 
 
-possibly relevant bits from old railspdf:
 
-To begin rendering PDFs, simply create a view with a .rpdf extension and paste in the code:
+example files:
+-------------------------------------------------
+TODO: fill in here
 
-  pdf.select_font "Times-Roman"
-  pdf.text "Hello, World", :font_size => 72, :justification => :center
 
-If you want the text to be dynamic, simply replace "Hello World" with an instance variable. It works like a charm, although I had to rearrange the code a bit to make it work. (See the sample controller code at the bottom.)
 
-I've not yet tested any of this; I was just too excited once it started working. Note: to get plugins to work properly, you MUST restart the server after installing it.
-
+important? info from railspdf README:
+-------------------------------------------------
   **Important** If you are using a layout, you must disable it for the view!!! 
-
-The default filename for the pdf is "Default.pdf" I'll probably change that later to reflect the view name, but for now it works pretty good. To override it, set an instance variable in your controller named "@rails_pdf_name" The rendered pdf will take this filename.
-
-Please let me know if you have any questions.
-
-
 Sample Controller
------------------
-
-  class PagesController < ApplicationController
-    def getpdf
-    	@rails_pdf_name = "Hello.pdf"
-    	@content = "This is dynamic content!!!"
-    end
-  end
-
-
-Sample View
------------
-
-  pdf.select_font "Times-Roman"
-  pdf.text @content, :font_size => 72, :justification => :center
-
-
-Misc
-----
-
-Original RubyForge project (outdated):
-  http://rubyforge.org/projects/railspdfplugin/
-
-GitHub fork:
-  http://github.com/pelargir/railspdf/
-
-Clone URL:
-  git://github.com/pelargir/railspdf.git
-
-
-Credit
-------
-
-  * Created by Tom Willett
-  * Forked and updated by Matthew Bass <pelargir@gmail.com>
