@@ -1,5 +1,5 @@
-require 'prawn_view'
+require 'prawnto'
 
 Mime::Type.register "application/pdf", :pdf
-ActionView::Template.register_template_handler :prawn, PrawnView::Prawn
+ActionView::Template.register_template_handler :prawn, Prawnto::Prawn
 

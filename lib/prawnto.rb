@@ -1,7 +1,7 @@
 require 'prawn'
 
 
-module PrawnView
+module Prawnto
 
   class Prawn < ActionView::TemplateHandler
     include ActionView::TemplateHandlers::Compilable
@@ -53,8 +53,14 @@ module PrawnView
       # for some reason above line is not working on subsequent requests for different pdfs, but the following does-- i have no clue?
       headers['Content-Type'] ||= 'application/pdf'
 
+      inline = @prawn_document_options[:inline]
       filename = @prawn_document_options[:filename]
-      headers["Content-Disposition"] ||= "attachment; filename=#{filename}" if filename
+      inline = inline ? 'inline' : inline==false ? 'attachment' : nil
+      filename = filename ? "filename=#{filename}" : nil
+      disposition = [inline,filename].compact.join(';')
+
+      headers["Content-Disposition"] ||= disposition if disposition.length > 0
+      
       #specify filename in controller otherwise will be inline
       #TODO: verify attachment/inline behavior
       #TODO: come up with solution for default naming (probably should just use railspdf way)
