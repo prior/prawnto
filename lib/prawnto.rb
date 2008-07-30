@@ -53,8 +53,8 @@ module Prawnto
       # for some reason above line is not working on subsequent requests for different pdfs, but the following does-- i have no clue?
       headers['Content-Type'] ||= 'application/pdf'
 
-      inline = @prawn_document_options[:inline]
-      filename = @prawn_document_options[:filename]
+      inline = @prawn_document_options.delete(:inline)
+      filename = @prawn_document_options.delete(:filename)
       inline = inline ? 'inline' : inline==false ? 'attachment' : nil
       filename = filename ? "filename=#{filename}" : nil
       disposition = [inline,filename].compact.join(';')
