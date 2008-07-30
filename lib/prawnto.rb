@@ -53,11 +53,12 @@ module Prawnto
       # for some reason above line is not working on subsequent requests for different pdfs, but the following does-- i have no clue?
       headers['Content-Type'] ||= 'application/pdf'
 
-      inline = @prawn_document_options.delete(:inline)
-      filename = @prawn_document_options.delete(:filename)
-      inline = inline ? 'inline' : inline==false ? 'attachment' : nil
+      inline = @prawn_document_options.delete(:inline) || true
+      filename = @prawn_document_options.delete(:filename) || 'xxx.pdf'
+      inline = inline ? 'inline' : 'attachment'
       filename = filename ? "filename=#{filename}" : nil
       disposition = [inline,filename].compact.join(';')
+      puts disposition
 
       headers["Content-Disposition"] ||= disposition if disposition.length > 0
       
