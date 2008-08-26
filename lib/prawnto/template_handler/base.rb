@@ -1,81 +1,72 @@
 module Prawnto
   module TemplateHandler
     class Base < ActionView::TemplateHandler
-      include ActionView::TemplateHandlers::Compilable
 
-      def self.line_offset
-        # looks for spot where binding is called-- since that is where the template is ultimately evaluated -- and that is what will give us accurate line # reporting
-        @@line_offset ||= template_wrapper_source.split(/^.*=\s*binding/)[0].count("\n")
+      attr_reader :prawnto_options
+
+      # TODO: kept around from railspdf-- maybe not needed anymore? should check.
+      def ie_request?
+        @view.request.env['HTTP_USER_AGENT'] =~ /msie/i
       end
 
-      def compile(template)
-        self.class.template_wrapper_source.sub(/^\s*yield/, template.source)
+      # TODO: kept around from railspdf-- maybe not needed anymore? should check.
+      def set_pragma
+        @view.headers['Pragma'] ||= ie_request? ? 'no-cache' : ''
       end
 
-    private
+      # TODO: kept around from railspdf-- maybe not needed anymore? should check.
+      def set_cache_control
+        @view.headers['Cache-Control'] ||= ie_request? ? 'no-cache, must-revalidate' : ''
+      end
 
-      # this is a dummy method to let me see code with editor's syntax goodness.
-      # it is erased immediately afterwards
-      # this method is never called, but instead the code is stripped out and pasted
-      # as code to be run by the caller of compile method
-      def template_wrapper_source_container
-        @prawnto_options = controller.send :compute_prawnto_options
-        # underscores are an attempt to avoid name clashes with user's local view variables
-        
-        #TODO: check if this really makes sense-- kept around from railspdf, but maybe not needed?
-        _pragma = 'no-cache'
-        _cache_control = 'no-cache, must-revalidate'
-        _pragma = _cache_control = '' if request.env['HTTP_USER_AGENT'] =~ /msie/i #keep ie happy (from railspdf-- no personal knowledge of these issues)
-        response.headers['Pragma'] ||= _pragma
-        response.headers['Cache-Control'] ||= _cache_control
-        
-        response.content_type = Mime::PDF
+      def set_content_type
+        @view.response.content_type = Mime::PDF
+      end
 
-        _inline = @prawnto_options[:inline] ? 'inline' : 'attachment'
-        _filename = @prawnto_options[:filename] ? "filename=#{@prawnto_options[:filename]}" : nil
-        _disposition = [_inline,_filename].compact.join(';')
+      def set_disposition
+        inline = @prawnto_options[:inline] ? 'inline' : 'attachment'
+        filename = @prawnto_options[:filename] ? "filename=#{@prawnto_options[:filename]}" : nil
+        @view.headers["Content-Disposition"] = [inline,filename].compact.join(';')
+      end
 
-        response.headers["Content-Disposition"] = _disposition if _disposition.length > 0
+      def build_headers
+        set_pragma
+        set_cache_control
+        set_content_type
+        set_disposition
+      end
 
-        _binding = nil
-        pdf = Prawn::Document.new(@prawnto_options[:prawn])
-        if _dsl = @prawnto_options[:dsl]
-          _variable_transfer = if _dsl.kind_of?(Array)
-            _dsl.map {|v| v = v[1..-1] if v[0,1]=="@"; "#{v}=@#{v};"}.join('')
-          elsif _dsl.kind_of?(Hash)
-            _dsl.map {|k,v| "#{k}=#{v};"}.join('')
-          else
-            ""
+      def build_source_to_establish_locals(template)
+        prawnto_locals = {}
+        if dsl = @prawnto_options[:dsl]
+          if dsl.kind_of?(Array)
+            dsl.each {|v| v = v.to_s.gsub(/^@/,''); prawnto_locals[v]="@#{v}"}
+          elsif dsl.kind_of?(Hash)
+            prawnto_locals.merge!(dsl)
           end
-          #eval _variable_transfer
-          eval "x=1"
-          puts x
-          puts _variable_transfer
-          puts "x"
-          puts x
-          puts "------------"
-          pdf.instance_eval do
-            _binding = binding; end; else; _binding = binding;  #stuck together to keep binding captures on same line so line_offset is valid in both cases
+        end
+        prawnto_locals.merge!(template.locals)
+        prawnto_locals.map {|k,v| "#{k} = #{v};"}.join("")
+      end
+
+      def pull_prawnto_options
+        @prawnto_options = @view.controller.send :compute_prawnto_options
+      end
+
+      def render(template)
+        pull_prawnto_options
+        build_headers
+
+        source = build_source_to_establish_locals(template)
+        if @prawnto_options[:dsl]
+          source += "pdf.instance_eval do\n#{template.source}\nend"
+        else
+          source += "\n#{template.source}"
         end
 
-        _view = <<EOS
-          yield
-EOS
-        eval(_view,_binding)
+        pdf = Prawn::Document.new(@prawnto_options[:prawn])
+        @view.instance_eval source, template.filename, 1
         pdf.render
-      end
-      remove_method :template_wrapper_source_container
-      
-      
-      # snips out source code from dummy method below (used by compile method)
-      def self.template_wrapper_source
-        @@template_wrapper_source ||= 
-          begin
-            method = 'template_wrapper_source_container'
-            regex_s = '(\s*)def\s' + method + '\s*\n(.*?\n)\1end'
-            source_regex = Regexp.new regex_s, Regexp::MULTILINE
-            source_regex.match(File.read(__FILE__))[2]
-          end
       end
 
     end

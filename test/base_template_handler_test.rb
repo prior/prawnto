@@ -11,25 +11,47 @@ class BaseTemplateHandlerTest < Test::Unit::TestCase
   def setup
     @view = ActionView.new
     @handler = Prawnto::TemplateHandler::Base.new(@view)
+    @controller = @view.controller
   end
 
-
   def test_prawnto_options_dsl_hash
-    x_value = 3231
-    y_value = 5322
-    x_grab = 0
-    @view.instance_eval do
-      @x = x_value
-      @y = y_value
-    end
-    @view.controller.prawnto_options.merge! :dsl=>{'x'=>:@x, :y=>'@y'}
-    source = @handler.compile(Template.new(""))
-    @view.instance_eval source+"\nx_grab = x\n", "base.rb", 22
-    assert_equal x_value, x_grab
-    assert_equal y_value, y
+    @y = 3231; @x = 5322
+    @controller.prawnto :dsl=> {'x'=>:@x, :y=>'@y'}
+    @handler.pull_prawnto_options
+    source = @handler.build_source_to_establish_locals(Template.new(""))
+
+    assert_equal @x, eval(source + "\nx")
+    assert_equal @y, eval(source + "\ny")
   end
 
   def test_prawnto_options_dsl_array
+    @y = 3231; @x = 5322
+    @controller.prawnto :dsl=> ['x', :@y]
+    @handler.pull_prawnto_options
+    source = @handler.build_source_to_establish_locals(Template.new(""))
+
+    assert_equal @x, eval(source + "\nx")
+    assert_equal @y, eval(source + "\ny")
+  end
+
+  def test_headers_disposition_inline_and_filename
+    @controller.prawnto :filename=>'xxx.pdf', :inline=>true
+    @handler.pull_prawnto_options
+    @handler.set_disposition
+    assert_equal 'inline;filename=xxx.pdf', @view.headers['Content-Disposition']
+  end
+
+  def test_headers_disposition_attachment_and_filename
+    @controller.prawnto :filename=>'xxx.pdf', :inline=>false
+    @handler.pull_prawnto_options
+    @handler.set_disposition
+    assert_equal 'attachment;filename=xxx.pdf', @view.headers['Content-Disposition']
+  end
+
+  def test_headers_disposition_default
+    @handler.pull_prawnto_options
+    @handler.set_disposition
+    assert_equal 'inline', @view.headers['Content-Disposition']
   end
 
 end

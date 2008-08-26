@@ -1,17 +1,25 @@
+require File.dirname(__FILE__) + '/../lib/prawnto'
+
 module TemplateHandlerTestMocks
 
   class Template
-    attr_reader :source
+    attr_reader :source, :locals, :filename
 
-    def initialize(source)
+    def initialize(source, locals={})
       @source = source
+      @locals = locals
+      @filename = "blah.pdf"
     end
   end
 
 
   class Response
+    def initialize
+      @headers = {}
+    end
+
     def headers
-      {}
+      @headers
     end
 
     def content_type=(value)
@@ -25,15 +33,15 @@ module TemplateHandlerTestMocks
   end
 
   class ActionController
-    attr_reader :prawnto_options
+    def self.before_filter(method)
+      @@init_method = method
+    end
 
     def initialize
-      @prawnto_options = {:prawn=>{}}
+      eval @@init_method.to_s
     end
-    
-    def compute_prawnto_options
-      @prawnto_options
-    end
+
+    include Prawnto::ActionController
 
     def response
       @response ||= Response.new
@@ -41,6 +49,10 @@ module TemplateHandlerTestMocks
 
     def request
       @request ||= Request.new
+    end
+
+    def headers
+      response.headers
     end
   end
     
@@ -57,8 +69,12 @@ module TemplateHandlerTestMocks
       controller.request
     end
 
+    def headers
+      controller.headers
+    end
+
     def prawnto_options
-      controller.prawnto_options
+      controller.get_instance_variable(:@prawnto_options)
     end
   end
 

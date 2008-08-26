@@ -7,8 +7,90 @@ require 'action_view'
 
 require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/prawnto'
+require File.dirname(__FILE__) + '/template_handler_test_mocks'
+
 
 class RawTemplateHandlerTest < Test::Unit::TestCase
+  include TemplateHandlerTestMocks
+  class ::ApplicationHelper
+  end
+
+  def setup
+    @view = ActionView.new
+    @handler = Prawnto::TemplateHandler::Raw.new(@view)
+  end
+
+
+  def test_massage_template_source_header_comments
+    expected_commented_lines = [0,2,3]
+    source = <<EOS
+      require 'prawn'
+      require 'hello'
+      require "rubygems"
+      $LOAD_PATH.unshift blah blah
+      LOAD_PATH.unshift blah blah
+EOS
+    output_lines = @handler.send(:massage_template_source, Template.new(source)).split("\n")
+    output_lines.each_with_index do |line, i|
+      method = expected_commented_lines.include?(i) ? :assert_match : :assert_no_match
+      self.send method, /^\s*\#/, line
+    end
+  end
+
+  def test_massage_template_source_generate
+    @handler.pull_prawnto_options
+    changed_lines = [0,2,3]
+    source = <<EOS
+      Prawn::Document.generate('hello.pdf') do |pdf|
+      end
+EOS
+    output_lines = @handler.send(:massage_template_source, Template.new(source)).split("\n")
+    assert_match(/^\s*(\S+)\s*\=\s*Prawn\:\:Document\.new\(?\s*\)?\s*do\s*\|pdf\|/, output_lines.first)
+    variable = $1
+    assert_match(/^\s*\[(\S+)\.render\s*\,\s*\'hello\.pdf\'\s*\]\s*$/, output_lines.last)
+    assert_equal variable, $1
+  end
+
+  def test_massage_template_source_new
+    @handler.pull_prawnto_options
+    unchanged_lines = [0,1,2]
+    source = <<EOS
+      x = Prawn::Document.new do |pdf|
+        text.blah blah blah
+      end
+      x.render_file('hello.pdf')
+EOS
+    source_lines = source.split("\n")
+    output_lines = @handler.send(:massage_template_source, Template.new(source)).split("\n")
+    output_lines.each_with_index do |line, i|
+      method = unchanged_lines.include?(i) ? :assert_equal : :assert_not_equal
+      self.send method, source_lines[i], line
+    end
+    assert_match(/^\s*\#\s*x\.render\_file\(\'hello.pdf\'\)/, output_lines[3])
+    assert_match(/^\s*\[\s*x\.render\s*\,\s*\'hello\.pdf\'\s*\]\s*$/, output_lines.last)
+  end
+
+  def test_massage_template_source_classes_methods
+    source = <<EOS
+      class Foo
+        def initialize
+          @foo = true
+        end
+      end
+
+      def bar(*args)
+        if args[0]==true
+          z = false
+        end
+      end
+EOS
+    @handler.send :setup_run_environment
+    output_lines = @handler.send(:massage_template_source, Template.new(source)).split("\n")
+    output_lines.pop
+    output_lines.each {|l| assert_match(/^\s*$/, l)}
+    assert @handler.run_environment.methods(false).include?('bar')
+    assert class <<@handler.run_environment; self; end.constants.include?('Foo')
+  end
 
   CURRENT_PATH = Pathname('.').realpath
   PRAWN_PATH = Pathname(Prawn::BASEDIR).realpath
@@ -49,11 +131,6 @@ class RawTemplateHandlerTest < Test::Unit::TestCase
   #ensure_reference_pdfs_are_recent
 
 
-  def setup
-    @view = ActionView.new
-    @handler = Prawnto::TemplateHandler::Raw.new(@view)
-  end
-
   def assert_renders_correctly(name, path)
     input_source = path.read
     output_source = @handler.compile(Template.new(input_source))
@@ -81,64 +158,6 @@ class RawTemplateHandlerTest < Test::Unit::TestCase
 
   
   
-  
-  # stubbing/mocking/whatever it's called
-  class ActionView
-
-    class ActionController
-      class Response
-        def headers
-          {}
-        end
-
-        def content_type=(value)
-        end
-      end
-
-      class Request
-        def env
-          {}
-        end
-      end
-
-      def compute_prawnto_options
-        {}
-      end
-
-      def response
-        @response ||= Response.new
-      end
-
-      def request
-        @request ||= Request.new
-      end
-    end
-    attr_reader :prawnto_options
-
-    def initialize
-      @prawnto_options= {}
-    end
-
-    def controller
-      @controller ||= ActionController.new
-    end
-
-    def response
-      controller.response
-
-    end
-    def request
-      controller.request
-    end
-  end
-
-  class Template
-    attr_reader :source
-    def initialize(source)
-      @source = source
-    end
-  end
-
 
 end
 

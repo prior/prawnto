@@ -30,12 +30,11 @@ module Prawnto
   private
 
     def reset_prawnto_options
-      @prawnto_options = nil
+      @prawnto_options = {:inline=> true}
     end
 
     def compute_prawnto_options
-
-      @prawnto_options ||= {}
+      @prawnto_options ||= reset_prawnto_options
       @prawnto_options[:prawn] ||= {}
       @prawnto_options[:prawn].merge!(self.class.read_inheritable_attribute(:prawn) || {}) {|k,o,n| o}
       @prawnto_options.merge!(self.class.read_inheritable_attribute(:prawnto) || {}) {|k,o,n| o}
