@@ -23,7 +23,7 @@ module Prawnto
     end
 
     def prawnto(options)
-      @prawnto_options = options
+      @prawnto_options.merge! options
     end
 
 
