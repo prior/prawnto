@@ -46,8 +46,6 @@ module Prawnto
           "\n" * match.count("\n")
         end
         source += "\n[#{variable_name}.render,#{filename}]\n"
-        puts ">>>>"
-        puts source
         source
       end
 
