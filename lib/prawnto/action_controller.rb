@@ -1,9 +1,10 @@
 module Prawnto
   module ActionController
+
+    DEFAULT_PRAWNTO_OPTIONS = {:inline=>true}
       
     def self.included(base)
       base.extend ClassMethods
-      base.before_filter :reset_prawnto_options
     end
 
     module ClassMethods
@@ -23,18 +24,15 @@ module Prawnto
     end
 
     def prawnto(options)
+      @prawnto_options ||= DEFAULT_PRAWNTO_OPTIONS.dup
       @prawnto_options.merge! options
     end
 
 
   private
 
-    def reset_prawnto_options
-      @prawnto_options = {:inline=> true}
-    end
-
     def compute_prawnto_options
-      @prawnto_options ||= reset_prawnto_options
+      @prawnto_options ||= DEFAULT_PRAWNTO_OPTIONS.dup
       @prawnto_options[:prawn] ||= {}
       @prawnto_options[:prawn].merge!(self.class.read_inheritable_attribute(:prawn) || {}) {|k,o,n| o}
       @prawnto_options.merge!(self.class.read_inheritable_attribute(:prawnto) || {}) {|k,o,n| o}
