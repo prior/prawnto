@@ -9,14 +9,26 @@ module Prawnto
         @view.request.env['HTTP_USER_AGENT'] =~ /msie/i
       end
 
+      def ssl_request?
+        @view.request.env['SERVER_PROTOCOL'].downcase == "https"
+      end
+
       # TODO: kept around from railspdf-- maybe not needed anymore? should check.
-      def set_pragma
-        @view.headers['Pragma'] ||= ie_request? ? 'no-cache' : ''
+       def set_pragma
+        if ssl_request? && ie_request?
+          @view.headers['Pragma'] = 'public'
+        else
+          @view.headers['Pragma'] ||= ie_request? ? 'no-cache' : ''
+        end
       end
 
       # TODO: kept around from railspdf-- maybe not needed anymore? should check.
       def set_cache_control
-        @view.headers['Cache-Control'] ||= ie_request? ? 'no-cache, must-revalidate' : ''
+        if ssl_request? && ie_request?
+          @view.headers['Cache-Control'] = 'maxage=1'
+        else
+          @view.headers['Cache-Control'] ||= ie_request? ? 'no-cache, must-revalidate' : ''
+        end
       end
 
       def set_content_type
