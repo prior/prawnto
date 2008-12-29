@@ -17,7 +17,7 @@ class RawTemplateHandlerTest < Test::Unit::TestCase
 
   def setup
     @view = ActionView.new
-    @handler = Prawnto::TemplateHandler::Raw.new(@view)
+    @handler = Prawnto::TemplateHandlers::Raw.new(@view)
   end
 
 

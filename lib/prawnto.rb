@@ -3,9 +3,12 @@ require 'action_view'
 
 require 'prawn'
 require 'prawnto/action_controller'
+require 'prawnto/action_view'
 
-require 'prawnto/template_handler/base'
-require 'prawnto/template_handler/raw'
+require 'prawnto/template_handler/compile_support'
+
+require 'prawnto/template_handlers/base'
+#require 'prawnto/template_handlers/raw'
 
 # for now applying to all Controllers
 # however, could reduce footprint by letting user mixin (i.e. include) only into controllers that need it
@@ -14,6 +17,10 @@ require 'prawnto/template_handler/raw'
 
 class ActionController::Base
   include Prawnto::ActionController
+end
+
+class ActionView::Base
+  include Prawnto::ActionView
 end
 
 
