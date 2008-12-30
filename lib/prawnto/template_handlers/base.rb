@@ -4,11 +4,9 @@ module Prawnto
       include ::ActionView::TemplateHandlers::Compilable
       
       def compile(template)
-        "puts 'base';" + 
-        "logger.warn 'BASE';" + 
         "_prawnto_compile_setup;" +
         "pdf = Prawn::Document.new(@prawnto_options[:prawn]);" + 
-        template.source +
+        "#{template.source}\n" +
         "pdf.render;"
       end
     end
