@@ -63,19 +63,6 @@ module Prawnto
         @controller.headers["Content-Disposition"] = [inline,filename].compact.join(';')
       end
 
-      def dsl_eval_string
-        dsl = options[:dsl] || {}
-        x = if dsl.kind_of?(Array)
-          dsl.map {|v| v.to_s}.map {|v| v = v[1..-1] if v[0,1]=="@"; "#{v}=@#{v};"}.join('')
-        elsif dsl.kind_of?(Hash)
-          dsl.map {|k,v| "#{k}=#{v};"}.join('')
-        else
-          ""
-        end
-        puts x
-        x
-      end
-
     end
 
   end
