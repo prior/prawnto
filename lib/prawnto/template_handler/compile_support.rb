@@ -30,8 +30,9 @@ module Prawnto
       memoize :ie_request?
 
       # added to make ie happy with ssl pdf's (per naisayer)
+      # wigsgiw - changed to new method of testing secure env, changed from @controller.request.env['SERVER_PROTOCOL'].downcase == "https" - was failing w/ rails 2.3.2 and IE
       def ssl_request?
-        @controller.request.env['SERVER_PROTOCOL'].downcase == "https"
+        @controller.request.ssl?
       end
       memoize :ssl_request?
 
