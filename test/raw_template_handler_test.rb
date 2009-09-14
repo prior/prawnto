@@ -24,7 +24,7 @@ class RawTemplateHandlerTest < Test::Unit::TestCase
   def test_massage_template_source_header_comments
     expected_commented_lines = [0,2,3]
     source = <<EOS
-      require 'prawn'
+      require 'prawn/core'
       require 'hello'
       require "rubygems"
       $LOAD_PATH.unshift blah blah
