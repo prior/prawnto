@@ -11,7 +11,7 @@ module Prawnto
       def prawnto(options)
         prawn_options, prawnto_options = breakdown_prawnto_options options
         write_inheritable_hash(:prawn, prawn_options)
-        write_inheritable_hash(:prawnto, prawnto_options)
+        write_inheritable_hash(:prawnto, DEFAULT_PRAWNTO_OPTIONS.dup.merge(prawnto_options))
       end
     
     private
@@ -24,7 +24,7 @@ module Prawnto
     end
 
     def prawnto(options)
-      @prawnto_options ||= DEFAULT_PRAWNTO_OPTIONS.dup
+      @prawnto_options ||= {}
       @prawnto_options.merge! options
     end
 
