@@ -21,6 +21,7 @@ module Prawnto
         set_cache_control
         set_content_type
         set_disposition
+        set_other_headers_for_ie_ssl
       end
 
       # TODO: kept around from railspdf-- maybe not needed anymore? should check.
@@ -34,6 +35,13 @@ module Prawnto
         @controller.request.env['SERVER_PROTOCOL'].downcase == "https"
       end
       memoize :ssl_request?
+      
+      def set_other_headers_for_ie_ssl
+        return unless ssl_request? && ie_request?
+        @controller.headers['Content-Description'] = 'File Transfer'
+        @controller.headers['Content-Transfer-Encoding'] = 'binary'
+        @controller.headers['Expires'] = '0'        
+      end
 
       # TODO: kept around from railspdf-- maybe not needed anymore? should check.
       def set_pragma
