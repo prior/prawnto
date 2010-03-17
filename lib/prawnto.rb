@@ -1,32 +1,29 @@
-require 'action_controller'
-require 'action_view'
+$:.unshift(File.dirname(__FILE__)) unless
+$:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'prawn'
-begin 
-  require "prawn/layout" # give people what they probably want
-rescue LoadError
+module Prawnto
+  autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
+  autoload :ActionViewMixin, 'prawnto/action_view_mixin'
+  module TemplateHandlers
+    autoload :Base, 'prawnto/template_handlers/base'
+    autoload :Dsl, 'prawnto/template_handlers/dsl'
+    autoload :Raw, 'prawnto/template_handlers/raw'
+  end
+
+  module TemplateHandler
+    autoload :CompileSupport, 'prawnto/template_handler/compile_support'
+  end
+
+  class << self
+    def enable
+      ActionController::Base.send :include, Prawnto::ActionControllerMixin
+      ActionView::Base.send :include, Prawnto::ActionViewMixin
+      Mime::Type.register "application/pdf", :pdf
+      ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
+      ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
+      ActionView::Template.register_template_handler 'prawn_xxx', Prawnto::TemplateHandlers::Raw  
+      puts "Prawnto gem has been enabled"
+    end
+  end
 end
-
-require 'prawnto/action_controller'
-require 'prawnto/action_view'
-
-require 'prawnto/template_handler/compile_support'
-
-require 'prawnto/template_handlers/base'
-#require 'prawnto/template_handlers/raw'
-
-# for now applying to all Controllers
-# however, could reduce footprint by letting user mixin (i.e. include) only into controllers that need it
-# but does it really matter performance wise to include in a controller that doesn't need it?  doubtful-- depends how much of a hit the before_filter is i guess.. 
-#
-
-class ActionController::Base
-  include Prawnto::ActionController
-end
-
-class ActionView::Base
-  include Prawnto::ActionView
-end
-
-
 
