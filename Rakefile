@@ -6,12 +6,12 @@ require 'rake/gempackagetask'
 desc 'Default: run unit tests.'
 task :default => :test
 
-desc 'Test the prawnto plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+#desc 'Test the prawnto plugin.'
+#Rake::TestTask.new(:test) do |t|
+  #t.libs << 'lib'
+  #t.pattern = 'test/**/*_test.rb'
+  #t.verbose = true
+#end
 
 desc 'Generate documentation for the prawnto plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
