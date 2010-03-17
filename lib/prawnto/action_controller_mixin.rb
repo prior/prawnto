@@ -1,5 +1,5 @@
 module Prawnto
-  module ActionController
+  module ActionControllerMixin
 
     DEFAULT_PRAWNTO_OPTIONS = {:inline=>true}
       
