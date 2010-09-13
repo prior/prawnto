@@ -26,7 +26,7 @@ PKG_FILES = FileList[ '[a-zA-Z]*',  'lib/**/*', 'test/*', 'rails/*' ]
 
 spec = Gem::Specification.new do |s|
   s.name = "prawnto"
-  s.version = "0.0.1"
+  s.version = Prawnto::VERSION
   s.author = "smecsia"
   s.email = "smecsia@gmail.com"
   #s.homepage = ""
