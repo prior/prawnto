@@ -24,6 +24,7 @@ end
 
 PKG_FILES = FileList[ '[a-zA-Z]*',  'lib/**/*', 'test/*', 'rails/*' ]
 
+require 'lib/prawnto.rb'
 spec = Gem::Specification.new do |s|
   s.name = "prawnto"
   s.version = Prawnto::VERSION
