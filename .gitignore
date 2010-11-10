@@ -2,3 +2,4 @@
 **/*.swp
 pkg/*
 reference_pdfs
+.idea

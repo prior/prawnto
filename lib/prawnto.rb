@@ -2,7 +2,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 module Prawnto
-  VERSION='0.0.3'
+  VERSION='0.0.4'
   autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
   autoload :ActionViewMixin, 'prawnto/action_view_mixin'
   module TemplateHandlers
@@ -25,5 +25,7 @@ module Prawnto
       ActionView::Template.register_template_handler 'prawn_xxx', Prawnto::TemplateHandlers::Raw  
     end
   end
+
+  require "prawnto/railtie"
 end
 
