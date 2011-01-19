@@ -1,4 +1,10 @@
 module Prawnto
+  # Acts like a dummy string to let ActionView concat to it
+  class NullObject
+    def <<(any)
+    end
+  end
+  
   module ActionView
 
     def self.included(base)
@@ -9,7 +15,12 @@ module Prawnto
       local_assigns ||= {}
       
       if template_format == :pdf && @pdf.nil?
+        # Override some helpers and add our own
         extend PrawntoLayoutHelpers
+        
+        # Mimic a text like template so that #concat can be called by ActionView when rendering layouts with code blocks
+        @output_buffer = NullObject.new
+        
         _prawnto_compile_setup
         @pdf = Prawn::Document.new(@prawnto_options[:prawn])
         render_without_prawnto(options, local_assigns, &block)
@@ -62,8 +73,8 @@ module Prawnto
 
           view.send(method_name(local_assigns), local_assigns) do |*names|
             ivar = :@_proc_for_layout
-            if !view.instance_variable_defined?(:"@content_for_#{names.first}") && view.instance_variable_defined?(ivar) && (proc = view.instance_variable_get(ivar))
-              view.capture(*names, &proc)
+            if view.instance_variable_defined?(ivar) && (proc = view.instance_variable_get(ivar))
+              proc.call(*names)
             elsif view.instance_variable_defined?(ivar = :"@content_for_#{names.first || :_action}")
               view.instance_variable_get(ivar).call(view.instance_variable_get(:@pdf))
             end
