@@ -6,12 +6,12 @@ require 'rake/gempackagetask'
 desc 'Default: run unit tests.'
 task :default => :test
 
-desc 'Test the prawnto plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+#desc 'Test the prawnto plugin.'
+#Rake::TestTask.new(:test) do |t|
+  #t.libs << 'lib'
+  #t.pattern = 'test/**/*_test.rb'
+  #t.verbose = true
+#end
 
 desc 'Generate documentation for the prawnto plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
@@ -24,9 +24,10 @@ end
 
 PKG_FILES = FileList[ '[a-zA-Z]*',  'lib/**/*', 'test/*', 'rails/*' ]
 
+require 'lib/prawnto.rb'
 spec = Gem::Specification.new do |s|
   s.name = "prawnto"
-  s.version = "0.0.1"
+  s.version = Prawnto::VERSION
   s.author = "smecsia"
   s.email = "smecsia@gmail.com"
   #s.homepage = ""
