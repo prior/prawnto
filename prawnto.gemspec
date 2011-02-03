@@ -3,8 +3,8 @@ spec = Gem::Specification.new do |s|
   s.version = "0.0.5" #Not sure what the version number should be...
   s.summary =  "A rails plugin leveraging the new prawn library to produce compiled pdf views."
   s.files = %w(lib/prawnto
-               lib/prawnto/action_controller.rb
-               lib/prawnto/action_view.rb
+               lib/prawnto/action_controller_mixin.rb
+               lib/prawnto/action_view_mixin.rb
                lib/prawnto/template_handler
                lib/prawnto/template_handler/compile_support.rb
                lib/prawnto/template_handlers
@@ -16,8 +16,6 @@ spec = Gem::Specification.new do |s|
                rails/init.rb
                Rakefile
                README
-               tasks
-               tasks/prawnto_tasks.rake
                test
                test/action_controller_test.rb
                test/base_template_handler_test.rb
