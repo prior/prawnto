@@ -8,7 +8,6 @@ module Prawnto
   module TemplateHandlers
     autoload :Base, 'prawnto/template_handlers/base'
     autoload :Dsl, 'prawnto/template_handlers/dsl'
-    autoload :Raw, 'prawnto/template_handlers/raw'
   end
 
   module TemplateHandler
@@ -22,7 +21,6 @@ module Prawnto
       Mime::Type.register "application/pdf", :pdf unless defined?(Mime::PDF)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
-      ActionView::Template.register_template_handler 'prawn_xxx', Prawnto::TemplateHandlers::Raw  
     end
   end
 
