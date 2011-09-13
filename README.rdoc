@@ -1,13 +1,9 @@
 = Prawnto
 
-a rails plugin providing templating abilities
-for generating pdf files leveraging the new kick-ass prawn library (http://prawn.majesticseacreature.com/)
+A rails plugin providing templating abilities for generating pdf files leveraging the new kick-ass prawn library (http://prawn.majesticseacreature.com/)
+Full documentation/demos at: http://cracklabs.com/prawnto (slightly out of date)
 
-full documentation/demos at: http://cracklabs.com/prawnto (slightly out of date)
-
-
-<b>Upgraded for Rails 3.1</b>
-Has not be tested with earlier versions.
+<b>Upgraded for Rails 3.1</b> - has not be tested with earlier versions.
 
 
 
