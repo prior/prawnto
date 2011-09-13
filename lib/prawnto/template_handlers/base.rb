@@ -6,7 +6,7 @@ module Prawnto
         "_prawnto_compile_setup;" +
         "pdf = Prawn::Document.new(@prawnto_options[:prawn]);" + 
         "#{template.source}\n" +
-        "pdf.render;"
+        "raw pdf.render;"
       end
     end
   end
