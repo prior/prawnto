@@ -2,7 +2,7 @@ module Prawnto
   module ActionViewMixin
 
   private
-    def _prawnto_compile_setup(dsl_setup = false)
+    def _prawnto_compile_setup
       compile_support = Prawnto::TemplateHandler::CompileSupport.new(controller)
       @prawnto_options = compile_support.options
     end
