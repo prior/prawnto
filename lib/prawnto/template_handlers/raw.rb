@@ -2,37 +2,15 @@ module Prawnto
   module TemplateHandlers
     class Raw < Base
       
-      def compile(template)
-        #TODO: what's up with filename here?  not used is it?
+      def self.call(template)
         source,filename = massage_template_source(template)
         "_prawnto_compile_setup;" +
-#        (filename ? "@prawnto_options[:filename] = filename" : "") +
         source
       end
-
-#      attr_reader :run_environment
 
       GENERATE_REGULAR_EXPRESSION = /^\s*Prawn\:\:Document\.generate(\(?)(.*?)(\,(.*))?(\s*\)?\s+do(.*?))$/m
       RENDER_FILE_REGULAR_EXPRESSION = /(\w+)\.render_file\(?(.*?)\)?\s*$/
 
-=begin
-      def render(template)
-        setup_run_environment
-        pull_prawnto_options
-        source,filename = massage_template_source(template)
-        @prawnto_options[:filename] = filename if filename
-        build_headers
-        @run_environment.instance_eval(source, template.filename, 0)  #run in anonymous class
-      end
-
-
-    protected
-
-      def setup_run_environment
-        @run_environment = Object.new
-      end
-
-=end
     protected
       def massage_template_source(template)
         source = template.source.dup

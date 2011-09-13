@@ -1,21 +1,29 @@
+lib = File.expand_path('./lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
+require "prawnto.rb"
+
 Gem::Specification.new do |s|
-  s.name = %q{prawnto}
-  s.version = "2.0.1"
-  s.required_rubygems_version = ">= 1.3.6"
-
-  s.authors = ['Some Body']
-  s.email   = ['some@body.com']
+  s.name = "prawnto"
+  s.version = Prawnto::VERSION
+  s.author = "smecsia"
+  s.email = "smecsia@gmail.com"
   s.date = '2011-09-13'
+  
+  s.summary = "Prawnto rails plugin implemented as a gem (see prawnto)"
+  s.description = '2011-2'
+  s.homepage = "http://cracklabs.com/prawnto"
 
-  s.homepage = %q{http://github.com/fzeisler/prawnto}
-  s.summary = %q{PDF views}
-  s.description = %q{PDF views}
+  s.required_rubygems_version = ">= 1.3.6"
+  s.platform = Gem::Platform::RUBY
+  s.add_dependency('rails', '>=3.1')
+  s.add_dependency('prawn', '>= 0.12.0')
 
   exclude_folders = 'spec/rails/{doc,lib,log,nbproject,tmp,vendor,test}'
   exclude_files = Dir['**/*.log'] + Dir[exclude_folders+'/**/*'] + Dir[exclude_folders]
-  s.files = Dir['{examples,lib,tasks,spec}/**/*'] -
-    exclude_files
+  s.files = Dir['{examples,lib,tasks,spec}/**/*'] - exclude_files
   s.require_paths = ["lib"]
-  
-  s.add_dependency('prawn', '>= 0.12.0')
+
+  s.has_rdoc = true
+  s.extra_rdoc_files = ["README"]
 end
