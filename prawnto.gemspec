@@ -13,8 +13,7 @@ Gem::Specification.new do |s|
 
   exclude_folders = 'spec/rails/{doc,lib,log,nbproject,tmp,vendor,test}'
   exclude_files = Dir['**/*.log'] + Dir[exclude_folders+'/**/*'] + Dir[exclude_folders]
-  s.files = Dir['{examples,lib,tasks,spec}/**/*'] +
-    %w(CHANGELOG LICENSE README.markdown init.rb) -
+  s.files = Dir['{examples,lib,tasks,spec}/**/*'] -
     exclude_files
   s.require_paths = ["lib"]
 end
