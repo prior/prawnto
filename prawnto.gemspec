@@ -1,26 +1,21 @@
-spec = Gem::Specification.new do |s|
-  s.name =    "prawnto"
-  s.version = "0.0.5" #Not sure what the version number should be...
-  s.summary =  "A rails plugin leveraging the new prawn library to produce compiled pdf views."
-  s.files = %w(lib/prawnto
-               lib/prawnto/action_controller_mixin.rb
-               lib/prawnto/action_view_mixin.rb
-               lib/prawnto/template_handler
-               lib/prawnto/template_handler/compile_support.rb
-               lib/prawnto/template_handlers
-               lib/prawnto/template_handlers/base.rb
-               lib/prawnto/template_handlers/dsl.rb
-               lib/prawnto/template_handlers/raw.rb
-               lib/prawnto.rb
-               MIT-LICENSE
-               rails/init.rb
-               Rakefile
-               README
-               test
-               test/action_controller_test.rb
-               test/base_template_handler_test.rb
-               test/dsl_template_handler_test.rb
-               test/raw_template_handler_test.rb
-               test/template_handler_test_mocks.rb)
-  #s.add_dependency "prawn", [">= 0.7.1"]
+Gem::Specification.new do |s|
+  s.name = %q{prawnto}
+  s.version = "2.0.1"
+  s.required_rubygems_version = ">= 1.3.6"
+
+  s.authors = ['Some Body']
+  s.email   = ['some@body.com']
+  s.date = '2011-09-13'
+
+  s.homepage = %q{http://github.com/fzeisler/prawnto}
+  s.summary = %q{PDF views}
+  s.description = %q{PDF views}
+
+  exclude_folders = 'spec/rails/{doc,lib,log,nbproject,tmp,vendor,test}'
+  exclude_files = Dir['**/*.log'] + Dir[exclude_folders+'/**/*'] + Dir[exclude_folders]
+  s.files = Dir['{examples,lib,tasks,spec}/**/*'] -
+    exclude_files
+  s.require_paths = ["lib"]
+  
+  s.add_dependency('prawn', '>= 0.12.0')
 end
