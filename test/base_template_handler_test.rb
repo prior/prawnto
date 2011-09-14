@@ -1,8 +1,7 @@
 require File.expand_path(File.dirname(__FILE__)+"/test_helper.rb")
-require File.dirname(__FILE__) + '/template_handler_test_mocks'
+require 'template_handler_test_mocks'
 
-#TODO: ruby1.9: pull same testing scheme from Raw once we're on 1.9
-class BaseTemplateHandlerTest < Test::Unit::TestCase
+class PrawntoControllerTest < ActionController::TestCase
   include TemplateHandlerTestMocks
   
   def setup
@@ -13,21 +12,21 @@ class BaseTemplateHandlerTest < Test::Unit::TestCase
 
   def test_headers_disposition_inline_and_filename
     @controller.prawnto :filename=>'xxx.pdf', :inline=>true
-    @handler.pull_prawnto_options
-    @handler.set_disposition
-    assert_equal 'inline;filename=xxx.pdf', @view.headers['Content-Disposition']
+    @view.public_prawnto_compile_setup
+    
+    assert_equal 'inline;filename="xxx.pdf"', @view.headers['Content-Disposition']
   end
 
   def test_headers_disposition_attachment_and_filename
     @controller.prawnto :filename=>'xxx.pdf', :inline=>false
-    @handler.pull_prawnto_options
-    @handler.set_disposition
-    assert_equal 'attachment;filename=xxx.pdf', @view.headers['Content-Disposition']
+    @view.public_prawnto_compile_setup
+    
+    assert_equal 'attachment;filename="xxx.pdf"', @view.headers['Content-Disposition']
   end
-
+  
   def test_headers_disposition_default
-    @handler.pull_prawnto_options
-    @handler.set_disposition
+    @view.public_prawnto_compile_setup
+    
     assert_equal 'inline', @view.headers['Content-Disposition']
   end
 

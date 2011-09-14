@@ -16,10 +16,6 @@ module Prawnto
 
   class << self
     def enable
-      # ActionController::Base.send :include, Prawnto::ActionControllerMixin
-      # ActionView::Base.send :include, Prawnto::ActionViewMixin
-      
-            
       ActiveSupport.on_load(:action_controller) do
         include Prawnto::ActionControllerMixin
       end

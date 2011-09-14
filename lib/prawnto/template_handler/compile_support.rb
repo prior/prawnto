@@ -12,6 +12,7 @@ module Prawnto
         set_headers
       end
 
+      # This sets the @options hash which is used for rendering.
       def pull_options
         @controller.send :compute_prawnto_options || {}
       end

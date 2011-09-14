@@ -1,74 +1,82 @@
-require File.expand_path(File.dirname(__FILE__)+"/test_helper.rb")
-
 module TemplateHandlerTestMocks
-
+  
   class Template
     attr_reader :source, :locals, :filename
-
+  
     def initialize(source, locals={})
       @source = source
       @locals = locals
       @filename = "blah.pdf"
     end
   end
-
-
-  class Response
-    def initialize
-      @headers = {}
-    end
-
-    def headers
-      @headers
-    end
-
-    def content_type=(value)
-    end
-  end
-
+  
+  
+  # class Response
+  #   def initialize
+  #     @headers = {}
+  #   end
+  # 
+  #   def headers
+  #     @headers
+  #   end
+  # 
+  #   def content_type=(value)
+  #   end
+  # end
+  
   class Request
     def env
       {}
     end
-  end
-
-  class ActionController
-
-    include Prawnto::ActionController
-
-    def response
-      @response ||= Response.new
+    
+    def ssl?
+      false
     end
-
+  end
+  
+  class ActionController
+    include Prawnto::ActionControllerMixin
+  
+    def response
+      @response ||= ActionDispatch::TestResponse.new
+    end
+  
     def request
       @request ||= Request.new
     end
-
+  
     def headers
       response.headers
     end
   end
     
   class ActionView
+    include Prawnto::ActionViewMixin
+
     def controller
       @controller ||= ActionController.new
     end
-
+    
     def response
       controller.response
     end
-
+    
     def request
       controller.request
     end
-
+    
     def headers
       controller.headers
     end
-
+    
     def prawnto_options
       controller.get_instance_variable(:@prawnto_options)
     end
+    
+    def public_prawnto_compile_setup
+      _prawnto_compile_setup
+    end
+    
   end
 
 

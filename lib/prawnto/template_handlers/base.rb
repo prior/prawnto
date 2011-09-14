@@ -1,6 +1,6 @@
 module Prawnto
   module TemplateHandlers
-    class Base      
+    class Base
       
       def self.call(template)
         "_prawnto_compile_setup;" +
