@@ -19,12 +19,11 @@ module Prawnto
       ActiveSupport.on_load(:action_controller) do
         include Prawnto::ActionControllerMixin
       end
-      
+
       ActiveSupport.on_load(:action_view) do
         include Prawnto::ActionViewMixin
       end
       
-
       Mime::Type.register "application/pdf", :pdf unless defined?(Mime::PDF)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl

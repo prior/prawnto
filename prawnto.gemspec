@@ -16,9 +16,26 @@ Gem::Specification.new do |s|
   s.add_dependency('rails', '>=3.1')
   s.add_dependency('prawn', '>= 0.12.0')
 
-  exclude_folders = 'spec/rails/{doc,lib,log,nbproject,tmp,vendor,test}'
-  exclude_files = Dir['**/*.log'] + Dir[exclude_folders+'/**/*'] + Dir[exclude_folders]
-  s.files = Dir['{examples,lib,tasks,spec}/**/*'] - exclude_files
+  s.files =   %w(lib/prawnto
+              lib/prawnto/action_controller_mixin.rb
+              lib/prawnto/action_view_mixin.rb
+              lib/prawnto/railtie.rb
+              lib/prawnto/template_handler
+              lib/prawnto/template_handler/compile_support.rb
+              lib/prawnto/template_handlers
+              lib/prawnto/template_handlers/base.rb
+              lib/prawnto/template_handlers/dsl.rb
+              lib/prawnto.rb
+              MIT-LICENSE
+              rails/init.rb
+              Rakefile
+              README.rdoc
+              test
+              test/action_controller_test.rb
+              test/base_template_handler_test.rb
+              test/dsl_template_handler_test.rb
+              test/template_handler_test_mocks.rb)
+  
   s.require_paths = ["lib"]
 
   s.has_rdoc = true
