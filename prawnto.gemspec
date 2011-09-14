@@ -3,8 +3,8 @@ require File.expand_path(File.join(File.dirname(__FILE__),"lib/prawnto.rb"))
 Gem::Specification.new do |s|
   s.name = "prawnto"
   s.version = Prawnto::VERSION
-  s.author = "smecsia"
-  s.email = "smecsia@gmail.com"
+  s.author = ["smecsia", "Forrest"]
+  s.email = ["smecsia@gmail.com", "development@forrestzeisler.com"]
   s.date = Time.now.utc.strftime("%Y-%m-%d")
   
   s.summary = "Prawnto rails plugin implemented as a gem (see prawnto)"
