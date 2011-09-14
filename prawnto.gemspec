@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__),"lib/prawnto.rb")
+require File.expand_path(File.join(File.dirname(__FILE__),"lib/prawnto.rb"))
 
 Gem::Specification.new do |s|
   s.name = "prawnto"
