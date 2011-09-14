@@ -1,8 +1,10 @@
 $:.unshift(File.dirname(__FILE__)) unless
 $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
+require 'prawnto/railtie' if defined?(Rails)
+
 module Prawnto
-  VERSION='0.0.6'
+  VERSION='0.0.7'
   autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
   autoload :ActionViewMixin, 'prawnto/action_view_mixin'
   module TemplateHandlers
@@ -15,21 +17,23 @@ module Prawnto
   end
 
   class << self
-    def enable
-      ActiveSupport.on_load(:action_controller) do
-        include Prawnto::ActionControllerMixin
-      end
-
-      ActiveSupport.on_load(:action_view) do
-        include Prawnto::ActionViewMixin
-      end
-      
+    
+    def run_includes
+      ActionController::Base.send :include, Prawnto::ActionControllerMixin
+      ActionView::Base.send :include, Prawnto::ActionViewMixin
+    end
+    
+    def register_handlers
       Mime::Type.register "application/pdf", :pdf unless defined?(Mime::PDF)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
     end
+    
+    def init_both
+      run_includes
+      register_handlers
+    end
+    
   end
 
-  require "prawnto/railtie"
 end
-

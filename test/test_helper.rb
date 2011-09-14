@@ -11,7 +11,7 @@ require 'action_view'
 require 'test/unit'
 
 require File.join(File.dirname(__FILE__), '/../lib/prawnto.rb')
-Prawnto.enable
+Prawnto.init_both
 
 class PrawntoController < ActionController::Base
 end
