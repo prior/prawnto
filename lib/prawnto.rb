@@ -16,8 +16,19 @@ module Prawnto
 
   class << self
     def enable
-      ActionController::Base.send :include, Prawnto::ActionControllerMixin
-      ActionView::Base.send :include, Prawnto::ActionViewMixin
+      # ActionController::Base.send :include, Prawnto::ActionControllerMixin
+      # ActionView::Base.send :include, Prawnto::ActionViewMixin
+      
+            
+      ActiveSupport.on_load(:action_controller) do
+        include Prawnto::ActionControllerMixin
+      end
+      
+      ActiveSupport.on_load(:action_view) do
+        include Prawnto::ActionViewMixin
+      end
+      
+
       Mime::Type.register "application/pdf", :pdf unless defined?(Mime::PDF)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl

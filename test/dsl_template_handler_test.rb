@@ -1,9 +1,5 @@
-require 'rubygems'
-require 'test/unit'
+require File.expand_path(File.dirname(__FILE__)+"/test_helper.rb")
 require File.dirname(__FILE__) + '/template_handler_test_mocks'
-require File.dirname(__FILE__) + '/../lib/prawnto'
-#require File.dirname(__FILE__) + '/../init'
-
 
 #TODO: ruby1.9: pull same testing scheme from Raw once we're on 1.9
 class DslTemplateHandlerTest < Test::Unit::TestCase

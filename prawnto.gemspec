@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version = Prawnto::VERSION
   s.author = "smecsia"
   s.email = "smecsia@gmail.com"
-  s.date = '2011-09-13'
+  s.date = Time.now.utc.strftime("%Y-%m-%d")
   
   s.summary = "Prawnto rails plugin implemented as a gem (see prawnto)"
   s.description = '2011-2'

@@ -1,5 +1,4 @@
-require 'rubygems'
-require File.dirname(__FILE__) + '/../lib/prawnto'
+require File.expand_path(File.dirname(__FILE__)+"/test_helper.rb")
 
 module TemplateHandlerTestMocks
 

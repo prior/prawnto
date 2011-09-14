@@ -1,11 +1,4 @@
-require 'rubygems'
-require 'action_controller'
-require 'action_controller/test_process'
-require 'action_view'
-
-require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/prawnto'
-
+require File.expand_path(File.dirname(__FILE__)+"/test_helper.rb")
 
 class ActionControllerTest < Test::Unit::TestCase
   class PrawntoController < ActionController::Base
