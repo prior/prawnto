@@ -1,28 +1,16 @@
 module TemplateHandlerTestMocks
+    # 
+    # class Template
+    #   attr_reader :source, :locals, :filename
+    # 
+    #   def initialize(source, locals={})
+    #     @source = source
+    #     @locals = locals
+    #     @filename = "blah.pdf"
+    #   end
+    # end
+    # 
   
-  class Template
-    attr_reader :source, :locals, :filename
-  
-    def initialize(source, locals={})
-      @source = source
-      @locals = locals
-      @filename = "blah.pdf"
-    end
-  end
-  
-  
-  # class Response
-  #   def initialize
-  #     @headers = {}
-  #   end
-  # 
-  #   def headers
-  #     @headers
-  #   end
-  # 
-  #   def content_type=(value)
-  #   end
-  # end
   
   class Request
     def env
