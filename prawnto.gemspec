@@ -1,6 +1,3 @@
-lib = File.expand_path('./lib/', __FILE__)
-$:.unshift lib unless $:.include?(lib)
-
 require File.join(File.dirname(__FILE__),"lib/prawnto.rb")
 
 Gem::Specification.new do |s|
