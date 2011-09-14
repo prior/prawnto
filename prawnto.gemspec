@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.date = Time.now.utc.strftime("%Y-%m-%d")
   
   s.summary = "Prawnto rails plugin implemented as a gem (see prawnto)"
-  s.description = '2011-2'
+  s.description = 'Prawnto rails plugin implemented as a gem (see prawnto)'
   s.homepage = "http://cracklabs.com/prawnto"
 
   s.required_rubygems_version = ">= 1.3.6"
@@ -36,8 +36,6 @@ Gem::Specification.new do |s|
               test/dsl_template_handler_test.rb
               test/template_handler_test_mocks.rb)
   
-  s.require_paths = ["lib"]
-
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc"]
 end
