@@ -16,8 +16,11 @@ In your <code>Gemfile</code>:
   
 == Usage
 
-On it's way...
+On it's way... This will be added to the {wiki}[http://github.com/forrest/prawnto/wiki]
 
+== Contributing & Reporting Issues
+
+While I can't promise the most speedy response, I do plan to continue to maintain this gem. Please feel free to report any issues, provide feedback, or make suggestions on the {Issue Tracker}[http://github.com/forrest/prawnto/issues]
 
 
 ---
