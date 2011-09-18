@@ -3,12 +3,12 @@ module Prawnto
 
     # This runs once during initialization.
     initializer "prawnto.register_handlers" do
-      Prawnto.register_handlers
+      Prawnto.on_init
     end
     
     # This will run it once in production and before each load in development.
     config.to_prepare do
-      Prawnto.run_includes
+      Prawnto.on_load
     end
     
   end

@@ -2,8 +2,6 @@
 
 A rails plugin providing templating abilities for generating pdf files leveraging the new kick-ass prawn library (http://prawn.majesticseacreature.com/)
 
-Full (slightly out of date) documentation/demos at: http://cracklabs.com/prawnto
-
 This is my attempt to merge the various forks of the prawnto gem, and <b>update it for Rails 3.1</b>. I want to thank the many developers who's code I collected together for the gem. Main credit goes to the developer of the initial Prawnto plugin - smecsia.
 
 <b>Note:</b> It has not been tested with earlier versions of Rails.
@@ -18,6 +16,9 @@ In your <code>Gemfile</code>:
 
 On it's way... This will be added to the {wiki}[http://github.com/forrest/prawnto/wiki]
 
+In the meantime you can read the original (slightly out of date) documentation/demos at: http://cracklabs.com/prawnto
+
+
 == Contributing & Reporting Issues
 
 While I can't promise the most speedy response, I do plan to continue to maintain this gem. Please feel free to report any issues, provide feedback, or make suggestions on the {Issue Tracker}[http://github.com/forrest/prawnto/issues]
@@ -26,6 +27,6 @@ While I can't promise the most speedy response, I do plan to continue to maintai
 ---
 
 
-Copyright on Updates - Copyright (c) 2011 getjobber.com, released under the MIT license
+Copyright on Updates - Copyright (c) 2011 OctopusApp Inc. (http://getjobber.com)
 
 Original Copyright - Copyright (c) 2008 cracklabs.com, released under the MIT license

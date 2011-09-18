@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.description = 'Simple PDF generation using the prawn library.'
   s.summary = "This gem allows you to use the PDF mime-type and the simple prawn syntax to generate impressive looking PDFs."
   
-  s.homepage = "http://cracklabs.com/prawnto"
+  # s.homepage = "http://cracklabs.com/prawnto"
 
   s.required_rubygems_version = ">= 1.3.6"
   s.platform = Gem::Platform::RUBY
