@@ -22,13 +22,13 @@ module Prawnto
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
     end
     
-    # Includes the mixins for ActionController and ActionView.
+    # Include the mixins for ActionController and ActionView.
     def on_load
       ActionController::Base.send :include, Prawnto::ActionControllerMixin
       ActionView::Base.send :include, Prawnto::ActionViewMixin
     end
     
-    # Runs the registration and include methods. This is used for testing only as the Railtie.rb usually runs these individually.
+    # Runs the registration and include methods. This is used for testing only as railtie.rb usually runs these individually.
     def init_both
       on_init
       on_load

@@ -11,13 +11,20 @@ This is my attempt to merge the various forks of the prawnto gem, and <b>update 
 In your <code>Gemfile</code>:
 
   gem "prawnto_2", :require => "prawnto"
+
+Then run:
+  
+  bundle install
+
+Now make a view:
+
+  <action name>.pdf.prawnto
   
 == Usage
 
-On it's way... This will be added to the {wiki}[http://github.com/forrest/prawnto/wiki]
+Please check out the {wiki}[http://github.com/forrest/prawnto/wiki] for usage details.
 
 In the meantime you can read the original (slightly out of date) documentation/demos at: http://cracklabs.com/prawnto
-
 
 == Contributing & Reporting Issues
 
@@ -27,6 +34,6 @@ While I can't promise the most speedy response, I do plan to continue to maintai
 ---
 
 
-Copyright on Updates - Copyright (c) 2011 OctopusApp Inc. (http://getjobber.com)
+Copyright on Updates - Copyright (c) 2011 OctopusApp Inc. ({getjobber.com}[http://getjobber.com]), released under the MIT license
 
 Original Copyright - Copyright (c) 2008 cracklabs.com, released under the MIT license
