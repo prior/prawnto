@@ -2,7 +2,7 @@ require File.expand_path("../lib/prawnto.rb", __FILE__)
 
 Gem::Specification.new do |s|
   s.name = "prawnto_2"
-  s.version = Prawnto::VERSION
+  s.version = Prawnto::PRAWNTO_VERSION
   s.author = ["Forrest"]
   s.email = ["development@forrestzeisler.com"]
   s.date = Time.now.utc.strftime("%Y-%m-%d")
