@@ -4,7 +4,6 @@ $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname
 require 'prawnto/railtie' if defined?(Rails)
 
 module Prawnto
-  PRAWNTO_VERSION='0.1.1'
   
   autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
   autoload :ActionViewMixin, 'prawnto/action_view_mixin'
