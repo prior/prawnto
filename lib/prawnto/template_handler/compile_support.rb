@@ -59,7 +59,7 @@ module Prawnto
 
       def set_disposition
         inline = options[:inline] ? 'inline' : 'attachment'
-        filename = options[:filename] ? "filename=#{options[:filename]}" : nil
+        filename = options[:filename] ? "filename=\"#{options[:filename]}\"" : nil
         @controller.headers["Content-Disposition"] = [inline,filename].compact.join(';')
       end
 
