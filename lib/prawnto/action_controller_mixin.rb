@@ -4,14 +4,13 @@ module Prawnto
     DEFAULT_PRAWNTO_OPTIONS = {:inline=>true}
       
     def self.included(base)
+      base.class_attribute :prawn, :prawnto
       base.extend ClassMethods
     end
 
     module ClassMethods
       def prawnto(options)
-        prawn_options, prawnto_options = breakdown_prawnto_options options
-        write_inheritable_hash(:prawn, prawn_options)
-        write_inheritable_hash(:prawnto, prawnto_options)
+        self.class.prawn, self.class.prawnto = breakdown_prawnto_options(options)
       end
     
     private
@@ -34,8 +33,8 @@ module Prawnto
     def compute_prawnto_options
       @prawnto_options ||= DEFAULT_PRAWNTO_OPTIONS.dup
       @prawnto_options[:prawn] ||= {}
-      @prawnto_options[:prawn].merge!(self.class.read_inheritable_attribute(:prawn) || {}) {|k,o,n| o}
-      @prawnto_options.merge!(self.class.read_inheritable_attribute(:prawnto) || {}) {|k,o,n| o}
+      @prawnto_options[:prawn].merge!(self.class.prawn || {}) {|k,o,n| o}
+      @prawnto_options.merge!(self.class.prawnto || {}) {|k,o,n| o}
       @prawnto_options
     end
 

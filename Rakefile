@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rake/gempackagetask'
+require 'rdoc/task'
+require 'rubygems/package_task'
 
 desc 'Default: run unit tests.'
 task :default => :test
@@ -42,7 +42,7 @@ spec = Gem::Specification.new do |s|
 end
 
 desc 'Turn this plugin into a gem.'
-Rake::GemPackageTask.new(spec) do |pkg|
+Gem::PackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
 end
 
