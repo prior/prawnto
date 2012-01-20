@@ -17,8 +17,8 @@ class ActionControllerTest < Test::Unit::TestCase
   end
 
   def test_inheritable_options
-    assert_equal({:page_orientation=>:landscape}, PrawntoController.prawn)
-    assert_equal({:inline=>true}, PrawntoController.prawnto)
+    assert_equal({:page_orientation=>:landscape}, PrawntoController.prawn_options)
+    assert_equal({:inline=>true}, PrawntoController.prawnto_options)
   end
 
   def test_computed_options
