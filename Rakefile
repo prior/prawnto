@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/testtask'
-require 'rdoc/task'  
-
+require 'rdoc/task'
+require 'rubygems/package_task'
 
 desc 'Default: run unit tests.'
 task :default => :test

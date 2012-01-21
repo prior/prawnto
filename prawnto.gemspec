@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = ">= 1.3.6"
   s.platform = Gem::Platform::RUBY
-  s.add_dependency('rails', '>=3.1')
+  s.add_dependency('rails', '>= 3.1')
   s.add_dependency('prawn', '>= 0.12.0')
 
   s.files         = `git ls-files`.split("\n")

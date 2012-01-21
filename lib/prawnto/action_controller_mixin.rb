@@ -9,7 +9,6 @@ module Prawnto
         include OptionsManager
       end
     end
-    
   end
 end
 

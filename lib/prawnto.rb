@@ -16,7 +16,7 @@ module Prawnto
     
     # Register the MimeType and the two template handlers.
     def on_init
-      Mime::Type.register "application/pdf", :pdf unless defined?(Mime::PDF)
+      Mime::Type.register("application/pdf", :pdf) unless Mime::Type.lookup_by_extension(:pdf)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
       ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
     end

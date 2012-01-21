@@ -21,13 +21,11 @@ module Prawnto
       def ie_request?
         request.env['HTTP_USER_AGENT'] =~ /msie/i
       end
-      # memoize :ie_request?
 
       # added to make ie happy with ssl pdf's (per naisayer)
       def ssl_request?
     		request.ssl?
       end
-      # memoize :ssl_request?
 
       def set_other_headers_for_ie_ssl
         return unless ssl_request? && ie_request?
