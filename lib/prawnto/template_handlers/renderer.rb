@@ -5,7 +5,6 @@ module Prawnto
         @calling_object = calling_object
         copy_instance_variables_from(@calling_object) if @calling_object
         @pdf = Prawn::Document.new(@prawnto_options[:prawn]);
-        self
       end
       
       def to_pdf(&block)
