@@ -1,3 +1,5 @@
+require "prawn"
+
 module Prawnto
   module TemplateHandlers
     class Dsl < Base

@@ -1,1 +1,1 @@
-pdf.text "Hello World!"
+pdf.text "Hello World! - #{@x}"

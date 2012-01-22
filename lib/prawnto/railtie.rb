@@ -13,6 +13,7 @@ module Prawnto
     # Include the mixins for ActionController and ActionView.
     config.to_prepare do
       ActionController::Base.send :include, Prawnto::ActionControllerMixin
+      ActionMailer::Base.send :include, Prawnto::ActionControllerMixin
       ActionView::Base.send :include, Prawnto::ActionViewMixins::ActionViewMixin
     end
     

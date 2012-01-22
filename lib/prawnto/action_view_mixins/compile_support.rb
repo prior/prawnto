@@ -14,13 +14,13 @@ module Prawnto
       end
 
       def set_headers
-        # unless defined?(ActionMailer) && defined?(ActionMailer::Base) && self.is_a?(ActionMailer::Base)
+        unless defined?(ActionMailer) && defined?(ActionMailer::Base) && @controller.is_a?(ActionMailer::Base)
           set_pragma
           set_cache_control
           set_content_type
           set_disposition
           set_other_headers_for_ie_ssl
-        # end
+        end
       end
 
       def ie_request?
