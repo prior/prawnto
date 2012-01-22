@@ -3,3 +3,5 @@
 *.gem
 rdoc/
 Gemfile.lock
+spec/dummy/tmp
+spec/dummy/log

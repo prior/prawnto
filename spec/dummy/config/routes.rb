@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  # root :to => "test#landing"
+  get "/simple_render" => "test#simple_render"
+  root :to => "test#simple_render"
 end
