@@ -23,8 +23,10 @@ Then run:
 Now make a view:
 
   <action name>.pdf.prawn
+ 
+---
   
-== Usage
+= Usage
 
 More Details will be coming to {wiki}[http://github.com/forrest/prawnto/wiki].
 
@@ -62,10 +64,13 @@ Sometimes you need to be able to render a PDF from anywhere (Background process 
     ...
     def to_pdf
       @x = 1
-      Prawnto::ModelRenderer.to_string "test/default_render", self
+      Prawnto::ModelRenderer.to_string "test/default_render.pdf", self
     end
   end
 
+<b>Gotcha:</b> Rails isn't always using the correct formatting. If you're having troubles, add the <code>.pdf</code> to the end of the requested template.
+
+---
 
 == Tips
 
