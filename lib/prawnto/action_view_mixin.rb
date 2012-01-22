@@ -4,8 +4,8 @@ module Prawnto
     private
 
     def _prawnto_compile_setup
-      controller.set_headers
-      @prawnto_options = controller.prawnto_options
+      compile_support = Prawnto::TemplateHandlers::CompileSupport.new(controller)
+      @prawnto_options = compile_support.options
     end
 
   end

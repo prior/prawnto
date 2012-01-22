@@ -7,6 +7,7 @@ module Prawnto
   autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
   autoload :ActionViewMixin, 'prawnto/action_view_mixin'
   module TemplateHandlers
+    autoload :CompileSupport, 'prawnto/template_handlers/compile_support'
     autoload :Base, 'prawnto/template_handlers/base'
     autoload :Dsl, 'prawnto/template_handlers/dsl'
   end
