@@ -1,5 +1,7 @@
 = Prawnto (prawnto_2)
 
+{<img src="https://secure.travis-ci.org/forrest/prawnto.png" />}[http://travis-ci.org/[forrest]/[prawnto]]
+
 A rails plugin providing templating abilities for generating pdf files leveraging the kick-ass prawn library (http://prawn.majesticseacreature.com/)
 
 This is my attempt to merge the various forks of the prawnto gem, and <b>update it for Rails 3.1+</b>. I want to thank the many developers who's code I collected together for the gem. Main credit goes to the developer of the initial Prawnto plugin - smecsia.
