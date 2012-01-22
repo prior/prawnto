@@ -14,7 +14,7 @@ module Prawnto
     config.to_prepare do
       ActionController::Base.send :include, Prawnto::ActionControllerMixin
       ActionMailer::Base.send :include, Prawnto::ActionControllerMixin
-      ActionView::Base.send :include, Prawnto::ActionViewMixins::ActionViewMixin
+      ActionView::Base.send :include, Prawnto::ActionViewMixin
     end
     
   end

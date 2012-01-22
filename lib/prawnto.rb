@@ -5,11 +5,9 @@ require 'prawnto/railtie' if defined?(Rails)
 
 module Prawnto
   autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
-  
-  module ActionViewMixins
-    autoload :ActionViewMixin, 'prawnto/action_view_mixins/action_view_mixin'
-    autoload :CompileSupport, 'prawnto/action_view_mixins/compile_support'
-  end
+  autoload :ActionViewMixin, 'prawnto/action_view_mixin'
+  autoload :CompileSupport, 'prawnto/compile_support'
+
 
   module TemplateHandlers
     autoload :Renderer, 'prawnto/template_handlers/renderer'
