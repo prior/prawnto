@@ -30,7 +30,6 @@ In the meantime you can read the original (slightly out of date) documentation/d
 
 While I can't promise the most speedy response, I do plan to continue to maintain this gem. Please feel free to report any issues, provide feedback, or make suggestions on the {Issue Tracker}[http://github.com/forrest/prawnto/issues]
 
-
 ---
 
 
