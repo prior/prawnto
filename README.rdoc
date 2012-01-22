@@ -62,7 +62,7 @@ Sometimes you need to be able to render a PDF from anywhere (Background process 
     ...
     def to_pdf
       @x = 1
-      Prawnto::Render.to_string "template_path", self
+      Prawnto::ModelRenderer.to_string "test/default_render", self
     end
   end
 

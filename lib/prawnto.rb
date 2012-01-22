@@ -18,7 +18,6 @@ module Prawnto
     autoload :Dsl, 'prawnto/template_handlers/dsl'
   end
   
-  autoload :Render, 'prawnto/pretend_render'
-  
+  autoload :ModelRenderer, 'prawnto/model_renderer'
   
 end

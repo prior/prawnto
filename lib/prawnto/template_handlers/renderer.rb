@@ -1,9 +1,10 @@
 module Prawnto
   module TemplateHandlers
     class Renderer
-      def initialize(calling_object = nil)
+      def initialize(view_context, calling_object = nil)
+        @view_context = view_context
         @calling_object = calling_object
-        copy_instance_variables_from(@calling_object) if @calling_object
+        set_instance_variables
         @pdf = Prawn::Document.new(@prawnto_options[:prawn]);
       end
       
@@ -13,6 +14,15 @@ module Prawnto
       end
     
     private
+    
+      def set_instance_variables
+        @calling_object ||= @view_context
+        copy_instance_variables_from @calling_object
+        
+        if @prawnto_options[:instance_variables_from]
+          copy_instance_variables_from @prawnto_options[:instance_variables_from]
+        end
+      end
     
       def pdf
         @pdf
@@ -32,6 +42,8 @@ module Prawnto
             pdf.send(m, *args)
           elsif @calling_object.respond_to?(m.to_s)
             @calling_object.send(m, *args)
+          elsif @calling_object != @view_context and @view_context.respond_to?(m.to_s)
+            @view_context.send(m, *args)
           else
             raise
           end
