@@ -19,7 +19,7 @@ module Prawnto
         self.prawnto_hash = DEFAULT_PRAWNTO_OPTIONS.dup.merge(prawnto_options)
       end
   
-      private
+    private
 
       # splits the :prawn key out into a seperate hash
       def breakdown_prawnto_options(options)
