@@ -18,6 +18,8 @@ Spork.prefork do
 
     config.infer_base_class_for_anonymous_controllers = false
   end
+  
+  TEST_ASSETS = File.expand_path("assets", File.dirname(__FILE__)).to_s
 
 end
 

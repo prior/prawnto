@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  get "/simple_render" => "test#simple_render"
-  root :to => "test#simple_render"
+  get "/default_render" => "test#default_render"
+  root :to => "test#default_render"
 end

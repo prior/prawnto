@@ -1,7 +1,7 @@
 class TestController < ApplicationController
 
-  def simple_render
-    
+  def default_render
+    render :action => "default_render"
   end
     
 end

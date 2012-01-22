@@ -1,6 +1,5 @@
 module Prawnto
-  module TemplateHandlers
-
+  module ActionViewMixins
     class CompileSupport
       attr_reader :options
 
@@ -68,7 +67,6 @@ module Prawnto
       end
 
     end
-
   end
 end
 
