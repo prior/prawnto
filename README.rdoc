@@ -18,7 +18,7 @@ Then run:
 
 Now make a view:
 
-  <action name>.pdf.prawnto
+  <action name>.pdf.prawn
   
 == Usage
 
