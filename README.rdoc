@@ -4,9 +4,13 @@ A rails plugin providing templating abilities for generating pdf files leveragin
 
 This is my attempt to merge the various forks of the prawnto gem, and <b>update it for Rails 3.1+</b>. I want to thank the many developers who's code I collected together for the gem. Main credit goes to the developer of the initial Prawnto plugin - smecsia.
 
+
+<b>I could use some help with the wiki.</b> If you find this helpful, and aren't up for contributing to the code, I would appreciate some help getting the docs in order.
+
+
 <b>Note:</b> It has not been tested with earlier versions of Rails.
 
-== Installation in Rails 3.1
+== Installation in Rails 3.1+
 
 In your <code>Gemfile</code>:
 
@@ -22,11 +26,54 @@ Now make a view:
   
 == Usage
 
-Please check out the {wiki}[http://github.com/forrest/prawnto/wiki] for usage details.
+More Details will be coming to {wiki}[http://github.com/forrest/prawnto/wiki].
 
-In the meantime you can read the original (slightly out of date) documentation/demos at: http://cracklabs.com/prawnto
+=== As View in Controller
+
+Simply create additional views that end with <code>.pdf.prawn</code> and rails will use the Prawnto template handler to render it properly. The beta has combined the regular <code>.prawn</code> and <code>.prawn_dsl</code> extensions. Now you won't get tired of typing <code>pdf.method</code>, but instance variables get used. There are a number of options available which are detailed in the wiki (or will be soon).
+  
+=== As Attachment to Email
+
+You can render PDF's as an attachment to an email very simply with Prawnto.
+  
+  class PdfEmailer < ActionMailer::Base
+    default from: "from@example.com"
+
+    def email_with_attachment
+      @var1 = 1
+      attachments["hello_world.pdf"] = render("test/default_render", :format => :pdf)
+      mail :subject => "Hello", :to => "test@test.com" do |format|
+        format.text
+      end
+    end
+  end
+
+If you need something more complicated, you may want to consider using the <code>Prawnto::Render.to_string</code> method listed next to create your attachment content.
+
+<b>Gotcha:</b> Something odd happens to the default format handling. You have to include the format block at the bottom, and specify the text, html, etc formats you want included on the body.
+
+=== From Model (or anywhere else)
+
+Experimental!!!
+
+Sometimes you need to be able to render a PDF from anywhere (Background process saving to the File, combining PDFs, etc), but you still want access to your helpers. This feature instantiates the most basic controller, and renders the template to a string for you to use. (more info coming to wiki soon)
+
+  class SuperModel
+    ...
+    def to_pdf
+      @x = 1
+      Prawnto::Render.to_string "template_path", self
+    end
+  end
+
+
+== Tips
+
+While layouts and partials aren't yet supported, helper methods can be called from within the PDF views. To help keep PDF's DRY, I would recommend creating a <code>PdfHelper</code> class for complex functionality. Don't forget to add this helper to your emailer if you generate PDF's as attachments.
 
 == Contributing & Reporting Issues
+
+Obviously, all code contributions are greatly appreciated. We also need help with testing and the wiki.
 
 While I can't promise the most speedy response, I do plan to continue to maintain this gem. Please feel free to report any issues, provide feedback, or make suggestions on the {Issue Tracker}[http://github.com/forrest/prawnto/issues]
 

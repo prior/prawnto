@@ -6,7 +6,7 @@ module Prawnto
     initializer "prawnto.register_handlers" do
       Mime::Type.register("application/pdf", :pdf) unless Mime::Type.lookup_by_extension(:pdf)
       ActionView::Template.register_template_handler 'prawn', Prawnto::TemplateHandlers::Base
-      ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Dsl
+      ActionView::Template.register_template_handler 'prawn_dsl', Prawnto::TemplateHandlers::Base # for legacy systems
     end
     
     # This will run it once in production and before each load in development.
