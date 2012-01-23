@@ -16,7 +16,7 @@ This is my attempt to merge the various forks of the prawnto gem, and <b>update 
 
 In your <code>Gemfile</code>:
 
-  gem "prawnto_2", "0.2.0.beta3", :require => "prawnto"
+  gem "prawnto_2", "0.2.0.beta6", :require => "prawnto"
 
 Then run:
   
