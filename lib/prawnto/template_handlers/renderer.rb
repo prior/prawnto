@@ -48,10 +48,14 @@ module Prawnto
             pdf.send(m, *args)
           elsif @calling_object.respond_to?(m.to_s)
             push_instance_variables_to @calling_object
-            @calling_object.send(m, *args)
+            res = @calling_object.send(m, *args)
+            copy_instance_variables_from @calling_object
+            res
           elsif @calling_object != @view_context and @view_context.respond_to?(m.to_s)
-            push_instance_variables_to @calling_object
-            @view_context.send(m, *args)
+            push_instance_variables_to @view_context
+            res = @view_context.send(m, *args)
+            copy_instance_variables_from @view_context
+            res
           else
             raise
           end

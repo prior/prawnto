@@ -6,4 +6,9 @@ module ApplicationHelper
   def x_output_helper
     @x.to_s
   end
+  
+  def set_x_to_3_in_helper
+    @x = 3
+  end
+  
 end
