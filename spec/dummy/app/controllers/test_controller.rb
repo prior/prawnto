@@ -9,5 +9,10 @@ class TestController < ApplicationController
     @x = 1
     render :action => "dsl_render"
   end
+  
+  def complex
+    @x = 1
+    render :action => "complex"
+  end
     
 end

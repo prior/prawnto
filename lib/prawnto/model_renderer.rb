@@ -19,7 +19,7 @@ module Prawnto
         instance.prawnto :inline => true, :instance_variables_from => calling_object
       end
   
-      return instance.render_to_string(:action => template, :template => false, :format => :pdf).html_safe
+      return instance.render_to_string(:action => template, :template => false, :formats => [:pdf]).html_safe
     end
 
   end

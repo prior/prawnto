@@ -2,7 +2,7 @@ require File.expand_path("../spec_helper.rb", File.dirname(__FILE__))
 
 describe TestController do
   
-  describe "GET default_render" do
+  describe "simple" do
     it "returns correct PDF" do
       get "/default_render.pdf"
       response.should be_success
@@ -14,7 +14,7 @@ describe TestController do
   end
   
   
-  describe "GET dsl_render" do
+  describe "dsl" do
     it "returns correct PDF" do
       get "/dsl_render.pdf"
       response.should be_success
@@ -23,6 +23,10 @@ describe TestController do
       body_binary = response.body.bytes.to_a
       body_binary.should == asset_binary
     end
+  end
+  
+  it "uses changed instance values in helpers" do
+    expect { get "/complex.pdf" }.should_not raise_error
   end
   
 end
