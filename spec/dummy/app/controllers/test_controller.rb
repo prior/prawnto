@@ -10,9 +10,13 @@ class TestController < ApplicationController
     render :action => "dsl_render"
   end
   
-  def complex
+  def instance_var_test
     @x = 1
-    render :action => "complex"
+    render :action => "instance_var_test"
+  end
+  
+  def yield_block_in_helper_test
+    render :action => "yield_block_in_helper_test"
   end
     
 end

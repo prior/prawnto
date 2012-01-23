@@ -11,4 +11,8 @@ module ApplicationHelper
     @x = 3
   end
   
+  def yield_this_block
+    yield
+  end
+  
 end
