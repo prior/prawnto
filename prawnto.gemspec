@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |s|
   s.name = "prawnto_2"
-  s.version = '0.2.0.beta6'
+  s.version = '0.2.0'
   s.author = ["Forrest"]
   s.email = ["development@forrestzeisler.com"]
   s.date = Time.now.utc.strftime("%Y-%m-%d")
