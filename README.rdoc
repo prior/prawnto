@@ -58,7 +58,7 @@ If you need something more complicated, you may want to consider using the <code
 
 === From Model (or anywhere else)
 
-Experimental!!!
+<b>Experimental!!! Will be changed</b>
 
 Sometimes you need to be able to render a PDF from anywhere (Background process saving to the File, combining PDFs, etc), but you still want access to your helpers. This feature instantiates the most basic controller, and renders the template to a string for you to use. (more info coming to wiki soon)
 
@@ -74,11 +74,11 @@ Sometimes you need to be able to render a PDF from anywhere (Background process 
 
 ---
 
-== Tips
+== Tips & Tricks
 
 While layouts and partials aren't yet supported, helper methods can be called from within the PDF views. To help keep PDF's DRY, I would recommend creating a <code>PdfHelper</code> class for complex functionality. Don't forget to add this helper to your emailer if you generate PDF's as attachments.
 
-== Contributing & Reporting Issues
+= Contributing & Reporting Issues
 
 Obviously, all code contributions are greatly appreciated. We also need help with testing and the wiki.
 
