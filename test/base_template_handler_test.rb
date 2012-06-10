@@ -19,14 +19,14 @@ class BaseTemplateHandlerTest < Test::Unit::TestCase
     @controller.prawnto :filename=>'xxx.pdf', :inline=>true
     @handler.pull_prawnto_options
     @handler.set_disposition
-    assert_equal 'inline;filename=xxx.pdf', @view.headers['Content-Disposition']
+    assert_equal 'inline;filename="xxx.pdf"', @view.headers['Content-Disposition']
   end
 
   def test_headers_disposition_attachment_and_filename
     @controller.prawnto :filename=>'xxx.pdf', :inline=>false
     @handler.pull_prawnto_options
     @handler.set_disposition
-    assert_equal 'attachment;filename=xxx.pdf', @view.headers['Content-Disposition']
+    assert_equal 'attachment;filename="xxx.pdf"', @view.headers['Content-Disposition']
   end
 
   def test_headers_disposition_default

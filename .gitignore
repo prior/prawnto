@@ -1,3 +1,7 @@
 .DS_Store
 **/*.swp
-reference_pdfs
+*.gem
+rdoc/
+Gemfile.lock
+spec/dummy/tmp
+spec/dummy/log

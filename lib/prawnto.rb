@@ -1,32 +1,21 @@
-require 'action_controller'
-require 'action_view'
+$:.unshift(File.dirname(__FILE__)) unless
+$:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'prawn'
-begin 
-  require "prawn/layout" # give people what they probably want
-rescue LoadError
+require 'prawnto/railtie' if defined?(Rails)
+
+module Prawnto
+  autoload :ActionControllerMixin, 'prawnto/action_controller_mixin'
+  autoload :ActionViewMixin, 'prawnto/action_view_mixin'
+  autoload :CompileSupport, 'prawnto/compile_support'
+
+
+  module TemplateHandlers
+    autoload :Renderer, 'prawnto/template_handlers/renderer'
+    
+    autoload :Base, 'prawnto/template_handlers/base'
+    autoload :Dsl, 'prawnto/template_handlers/dsl'
+  end
+  
+  autoload :ModelRenderer, 'prawnto/model_renderer'
+  
 end
-
-require 'prawnto/action_controller'
-require 'prawnto/action_view'
-
-require 'prawnto/template_handler/compile_support'
-
-require 'prawnto/template_handlers/base'
-#require 'prawnto/template_handlers/raw'
-
-# for now applying to all Controllers
-# however, could reduce footprint by letting user mixin (i.e. include) only into controllers that need it
-# but does it really matter performance wise to include in a controller that doesn't need it?  doubtful-- depends how much of a hit the before_filter is i guess.. 
-#
-
-class ActionController::Base
-  include Prawnto::ActionController
-end
-
-class ActionView::Base
-  include Prawnto::ActionView
-end
-
-
-
