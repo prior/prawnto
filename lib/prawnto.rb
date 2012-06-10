@@ -28,5 +28,6 @@ class ActionView::Base
   include Prawnto::ActionView
 end
 
-
-
+class ActionView::Template
+  include Prawnto::Template
+end
